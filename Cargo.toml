@@ -1,0 +1,13 @@
+[package]
+name = "asahi-fix27"
+version = "0.1.0"
+edition = "2024"
+description = "Fix macOS 27 bootability flag from linux side"
+homepage = "https://github.com/AsahiLinux/asahi-fix27"
+repository = "https://github.com/AsahiLinux/asahi-fix27"
+
+
+[dependencies]
+anyhow = "1"
+uuid = "1"
+gpt = "3"
