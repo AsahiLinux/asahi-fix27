@@ -5,7 +5,7 @@ use gpt::{GptConfig, disk::LogicalBlockSize};
 use std::{
     env,
     fs::File,
-    io::{self, Read, Seek, SeekFrom, Write},
+    io::{self, ErrorKind, Read, Seek, SeekFrom, Write},
 };
 use uuid::Uuid;
 
@@ -268,7 +268,15 @@ fn scan_disks(proceed: bool) -> Result<bool> {
     let disk = GptConfig::new()
         .writable(false)
         .logical_block_size(LogicalBlockSize::Lb4096)
-        .open("/dev/nvme0n1")?;
+        .open("/dev/nvme0n1");
+    let disk = match disk {
+        Ok(d) => d,
+        Err(e) if e.kind() == ErrorKind::PermissionDenied => {
+            eprintln!("Unable to open the disk, try running with sudo?");
+            return Ok(false);
+        }
+        e => e?,
+    };
     let mut found_any = false;
     for (i, v) in disk.partitions() {
         if v.part_type_guid.guid != "7C3457EF-0000-11AA-AA11-00306543ECAC" {
