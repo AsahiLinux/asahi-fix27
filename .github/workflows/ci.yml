@@ -1,0 +1,17 @@
+name: Rust-static-build
+on:
+  push:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-24.04-arm
+    container: 
+    steps:
+    - uses: actions/checkout@v7
+    - name: Build-musl
+      run: |
+        rustup target add aarch64-unknown-linux-musl && cargo build --target aarch64-unknown-linux-musl --release
+    - uses: actions/upload-artifact@v7
+      with:
+        name: asahi-fix27
+        path: target/aarch64-unknown-linux-musl/release/asahi-fix27
