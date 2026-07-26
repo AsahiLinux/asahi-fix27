@@ -5,6 +5,7 @@ edition = "2024"
 description = "Fix macOS 27 bootability flag from linux side"
 homepage = "https://github.com/AsahiLinux/asahi-fix27"
 repository = "https://github.com/AsahiLinux/asahi-fix27"
+license = "GPL-2.0-only"
 
 
 [dependencies]
